@@ -39,28 +39,23 @@ The setup command:
 - Functionally cohesive folder structure for the endpoints (sale-amendment, tax position and transactions).
 
 ### Observability
+Observability is implemented through logging (Winston) and metrics collection (Prometheus).
 
-Observabiliity is implemented in two different ways. Through a logger (winston) and gathering metrics (prometheus).
+Logging: Logs are generated for each request and database change. Logs are saved to a text file in the /logs folder and output to the console. Logging occurs only in the development environment.
 
-Logging is performed through the middleware on each request and through the ORM whenever there are changes to the database. Logs are sent to a txt file within the /logs folder and also output to the console. Logs are only created in the development environment and not when tests are run.
-
-Metrics are gathered every 15 seconds through the /metrics endpoint. Viewing these metrics can be done on port 9090 with prometheus.
+Metrics: Metrics are collected every 15 seconds via the /metrics endpoint. You can view these metrics on port 9090 with Prometheus.
 
 ### Scale
 
-For this technical test some consideration for scale has been implemented. Within the tax calculation a map has been created on invoiceId + itemId which significantly reduces the time it takes for the calculation to take place.
+Some scalability considerations are implemented. For tax calculation, a map based on invoiceId + itemId is used to reduce calculation time.
 
-With large datasets, this approach could be improved by storing a key made of the indexed invoiceId + itemId and the quantity of each item. The quantity and any relevant sale amendment could then be calculated off this aggregation.
-
-The tradeoff here would be doing more on transaction creation (incrementing invoiceId + itemId combinations).
+With large datasets, storing a key made of invoiceId + itemId and the item quantity can improve performance. This approach trades off more processing during transaction creation for faster calculations.
 
 ### Tests
 
-All endpoints have integration tests. Integration tests are run on a separate database as defined in the docker image.
+Integration tests cover all endpoints and run on a separate database defined in the Docker image. I've also included an example of a unit test.
 
-Unit tests have also been created where appropriate.
-
-Given more time I would increase the code coverage.
+Given more time I would increase the code coverage, write more unit tests and cover more non-optimal inputs and paths.
 
 ```bash
 npm run test
@@ -68,6 +63,6 @@ npm run test
 
 ### Other thoughts
 
-Given my implementation the /sales endpoint should probably be a post request as it creates a sales amendment. I decided it was better to keep the api consistent with the brief.
+The /sales endpoint should be a POST request as it creates a sales amendment, but it was kept consistent with the brief.
 
-I considered building the service in a more 'event driven' way where you utilise an event store to persist data. However, I decided not to do this as financial data is particularly suited to a tabular data format and I didn't like the idea of interrogating nested payloads for SALES events. Furthermore as we have three different endpoints, where within an event driven architecture we could get away with one it didn't seem appropriate.
+An event-driven architecture was considered but not implemented. Financial data suits a tabular format, and querying nested payloads for sales events is less efficient. With three different endpoints, an event-driven approach didn't seem appropriate.
