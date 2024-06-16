@@ -53,13 +53,11 @@ With large datasets, storing a key made of invoiceId + itemId and the item quant
 
 ### Tests
 
+To run the tests `npm run test`.
+
 Integration tests cover all endpoints and run on a separate database defined in the Docker image. I've also included an example of a unit test.
 
 Given more time I would increase the code coverage, write more unit tests and cover more non-optimal inputs and paths.
-
-```bash
-npm run test
-```
 
 ### Other thoughts
 
