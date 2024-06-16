@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_USER=Novabook
+      - POSTGRES_PASSWORD=verysecretpassword
+      - POSTGRES_DB=development
+    ports:
+      - "5433:5432"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  postgres_test:
+    image: postgres
+    environment:
+      - POSTGRES_USER=testuser
+      - POSTGRES_PASSWORD=testpassword
+      - POSTGRES_DB=test
+    ports:
+      - "5434:5432"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

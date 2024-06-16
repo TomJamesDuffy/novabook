@@ -1,0 +1,18 @@
+{
+  "development": {
+    "username": "Novabook",
+    "password": "verysecretpassword",
+    "database": "development",
+    "host": "localhost",
+    "dialect": "postgres",
+    "port": 5433
+  },
+  "test": {
+    "username": "testuser",
+    "password": "testpassword",
+    "database": "test",
+    "host": "localhost",
+    "dialect": "postgres",
+    "port": 5434
+  }
+}

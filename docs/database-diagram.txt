@@ -1,0 +1,36 @@
+// Paste this into https://dbdiagram.io/d to view diagram structure.
+
+// Enum definition
+Enum Event_Type {
+  "SALES"
+  "TAX_PAYMENT"
+}
+
+// Tables
+Table Transaction {
+  ID char(36) [pk]
+  EventType Event_Type
+  Date datetime
+  InvoiceID char(36)
+  Amount integer
+}
+
+Table SaleItem {
+  ID char(36) [pk]
+  TransactionID char(36)
+  ItemID char(36)
+  Cost integer
+  TaxRate float
+}
+
+Table SaleAmendment {
+  ID char(36) [pk]
+  Date datetime
+  InvoiceID char(36)
+  ItemID char(36)
+  Cost integer
+  TaxRate float
+}
+
+// Relationships
+Ref: "SaleItem"."TransactionID" > "Transaction"."ID"
