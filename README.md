@@ -20,7 +20,7 @@ The setup command:
 
 1. Builds the docker containers for the test and development environments as well as sets up prometheus.
 2. Installs dependencies.
-3. Runs migrations that set up the [database structure](./docs/database-structure.png).
+3. Runs migrations that set up the [database structure](./docs/database-diagram.png).
 4. Runs seeds to populate the database with mock data.
 5. Begins the server.
 
